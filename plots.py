@@ -23,20 +23,20 @@ def population2015States(newdf):
     fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2015_CIV', color='ABBR',  width=1000, height=650)
     fig.update_layout(title={'text': "2010 Populations per State",'y':0.9,'x':0.5,'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", yaxis_title = "Populations", 
     showlegend=False)
-     export_plotly_to_png(fig, 'fig2.png')
+    export_plotly_to_png(fig, 'fig2.png')
     return fig
 
 def population2019States(newdf):
     fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2019_CIV', color='ABBR',  width=1000, height=650)
     fig.update_layout(title={'text': "2019 Populations per State",'y':0.9,'x':0.5,'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", yaxis_title = "Populations", 
     showlegend=False)
-     export_plotly_to_png(fig, 'fig3.png')
+    export_plotly_to_png(fig, 'fig3.png')
     return fig
 
 def sitesperState(sites_df):
     fig = px.histogram(sites_df, x='State Code', color='State Code', width=1000, height=650)
     fig.update_layout(title={'text': "Number of sites per State", 'y':0.9, 'x':0.5, 'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", showlegend = False)
-     export_plotly_to_png(fig, 'fig4.png')
+    export_plotly_to_png(fig, 'fig4.png')
     return fig
 
 def create_county_map(dataframe, county_column, var_column, cmap='Viridis', filename='fig5.png'):
