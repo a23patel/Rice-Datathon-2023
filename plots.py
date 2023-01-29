@@ -78,7 +78,6 @@ def census_2010_pop(newdf, counties, cmap='Viridis'):
                           )
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    fig.show()
     export_plotly_to_png(fig, "fig6.png")
     return fig
     
