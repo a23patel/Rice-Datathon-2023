@@ -8,27 +8,6 @@ import json
 
 def export_plotly_to_png(fig, filename):    # converting plotly graphs to png files
     pio.write_image(fig, filename, format='png')
-    
-def create_bar_plot(dataframe, x, y, color, width, height, title_name='2010 Populations per State):
-    fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2010_CIV', color='ABBR',  width=1000, height=650)
-    fig.update_layout(
-    title={
-        'text': title_name,
-        'y':0.9,
-        'x':0.5,
-        'xanchor': 'center',
-        'yanchor': 'top'},
-    xaxis_title = "States",
-    yaxis_title = "Populations",
-    showlegend=False
-    )
-    fig.show()
-    export_plotly_to_png(fig, "fig1.png")
-    return fig
-
-def pop2015_bar():
-    fig = create_bar_plot(newdf, 'ABBR', 'POPEST2015_CIV', 'ABBR', 1000, 650, '2015 Populations per State')
-                    
 
 def create_county_map(dataframe, county_column, var_column, cmap='Viridis'):
     counties = None
