@@ -12,35 +12,30 @@ import json
 def export_plotly_to_png(fig, filename):
     pio.write_image(fig, filename, format='png')
 
-def population2010States(dataframe, state_column, var_column, cmap='Viridis'):
+def population2010States(newdf):
     fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2010_CIV', color='ABBR',  width=1000, height=650)
     fig.update_layout(title={'text': "2010 Populations per State",'y':0.9,'x':0.5,'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", yaxis_title = "Populations", 
     showlegend=False)
-    fig.show()
     return fig
 
-def population2015States(dataframe, state_column, var_column, cmap='Viridis'):
+def population2015States(newdf):
     fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2015_CIV', color='ABBR',  width=1000, height=650)
     fig.update_layout(title={'text': "2010 Populations per State",'y':0.9,'x':0.5,'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", yaxis_title = "Populations", 
     showlegend=False)
-    fig.show()
     return fig
 
-def population2019States(dataframe, state_column, var_column, cmap='Viridis'):
+def population2019States(newdf):
     fig = px.bar(newdf, x = 'ABBR', y = 'POPEST2019_CIV', color='ABBR',  width=1000, height=650)
     fig.update_layout(title={'text': "2019 Populations per State",'y':0.9,'x':0.5,'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", yaxis_title = "Populations", 
     showlegend=False)
-    fig.show()
     return fig
 
-def sitesperState(dataframe, county_column, var_column, cmap='Viridis'):
-    sites_df = parse_sites(collab_dir+'/beginner.txt', include_PR=False)
+def sitesperState(sites_df):
     fig = px.histogram(sites_df, x='State Code', color='State Code', width=1000, height=650)
     fig.update_layout(title={'text': "Number of sites per State", 'y':0.9, 'x':0.5, 'xanchor': 'center','yanchor': 'top'}, xaxis_title = "States", showlegend = False)
-    fig.show()
     return fig
 
-def create_county_map(dataframe, county_column, var_column, cmap='Viridis'):
+def create_county_map(dataframe, county_column, cmap='Viridis'):
     counties = None
     with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
         counties = json.load(response)
@@ -73,7 +68,7 @@ def create_state_map(dataframe, state_column, var_column, cmap='Viridis'):
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     return fig
 
-def census_2010_pop(dataframe, state_column, var_column, cmap='Viridis'):
+def census_2010_pop(newdf, counties, cmap='Viridis'):
     fig = px.choropleth(newdf, geojson = counties, 
                            locations='state_column',
                            locationmode="USA-states", color='var_column',
