@@ -67,6 +67,11 @@ states = {
 }
 
 def load_census(directory):
+    """
+    Processing and cleaning the census demographics dataset 'sc-est2019-agesex-civ.csv'
+    We removed the columns we did not use, and restricted the data to a population relevant to the problem (women aged 30 to 75)
+    We then aggregate the data by state, and return a cleaned dataframe
+    """
     census_df = pd.read_csv(directory+'/sc-est2019-agesex-civ.csv')
     census_df.drop({'SUMLEV', 'DIVISION', 'REGION'}, axis=1, inplace=True)
     # Remove 'United States'
@@ -106,6 +111,9 @@ def load_census(directory):
     return grouped_census_df
 
 def time_series_by_state(joined_df, state):
+    """
+    Function to generate time series by state, for use by the linear regression models for each state
+    """
     time_df = pd.melt(joined_df[joined_df['State Code'] == state], value_vars=['ESTBASE2010_CIV', 'POPEST2011_CIV', 'POPEST2012_CIV', 'POPEST2013_CIV', 'POPEST2014_CIV', 'POPEST2015_CIV', 'POPEST2016_CIV', 'POPEST2017_CIV', 'POPEST2018_CIV', 'POPEST2019_CIV'])
     time_df['year'] = time_df.index
     time_df['year'] = time_df['year'] + 2010
@@ -113,6 +121,11 @@ def time_series_by_state(joined_df, state):
     return time_df
 
 def linearRegressiontrain(joined_df):
+    """
+    Function to produce 2025 predictions for each state's population as a new column in joined_df
+
+    The R^2 coefficient of fit is printed for each state
+    """
     joined_df['Predicted Population 2025'] = 0
     joined_df.reset_index(inplace = True)
     for i, state in enumerate(joined_df['State']):
@@ -136,6 +149,7 @@ def join_states_tables(sites_df, census_df):
     """
     Create a joined table of sites aggregated by state, and census data aggregated by state
     Produce statistic for persons/site for the start and endpoints, and the percent change over the timeframe
+    Run the linear regression models to generate predicted 2025 population and generates percent change columns
     """
     sites_state_vc = sites_df['State Code'].value_counts()
     sites_state_vc_df = pd.DataFrame({'State': sites_state_vc.index, 'Count':sites_state_vc})
