@@ -15,7 +15,7 @@
   <li> <b>Aadarsh Srivatsav <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30px"/></b></li>
   </ul>
   
- ### <h2> CHALLENGE DESCRIPTION </h2>
+ ### <h2> BEGINNER CHALLENGE DESCRIPTION </h2>
  
  The Food and Drug Administration (FDA) Certified Mammograms Facility Dataset is a list of medical facilities that meet the baseline quality standards set by the FDA to perform mammography exams. A mammography is an x-ray imaging method used to inspect the breast for diseases, such as breast cancer.
 
