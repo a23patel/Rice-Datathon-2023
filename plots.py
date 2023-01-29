@@ -83,7 +83,7 @@ def census_2010_pop(newdf, counties, cmap='Viridis'):
     export_plotly_to_png(fig, "fig6.png")
 
 def census_2010_map(dataframe, state_column, var_column, cmap='Viridis', filename='fig6.png'):
-    fig = create_state_map(dataframe, 'State', 'ESTBASE2010_CIV', cmap='Viridis', filename)
+    fig = create_state_map(dataframe, 'State', 'ESTBASE2010_CIV', cmap='Viridis', filename=filename)
     export_plotly_to_png(fig, filename)
     return fig
  
@@ -99,5 +99,10 @@ def plot_2019_pop_per_site(dataframe, state_column, var_column, cmap='Viridis', 
                       
 def plot_2010_2019_per_site_change(dataframe, state_column, var_column, cmap='Viridis', filename='fig9.png'):
     fig = create_state_map(dataframe, 'State', 'Percent Change of 2010-2019 persons per site', cmap='Viridis', filename=filename)
+    export_plotly_to_png(fig, filename)
+    return fig
+
+def plot_2010_2025_per_site_change(dataframe, state_column, var_column, cmap='Viridis', filename='fig9.png'):
+    fig = create_state_map(dataframe, 'State', 'Percent Change of 2010-2025 persons per site', cmap='Viridis', filename=filename)
     export_plotly_to_png(fig, filename)
     return fig
