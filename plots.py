@@ -2,9 +2,12 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import seaborn as sns
-
+import plotly.io as pio
 from urllib.request import urlopen
 import json
+
+def export_plotly_to_png(fig, filename):
+    pio.write_image(fig, filename, format='png')
 
 def create_county_map(dataframe, county_column, var_column, cmap='Viridis'):
     counties = None
@@ -38,3 +41,4 @@ def create_state_map(dataframe, state_column, var_column, cmap='Viridis'):
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     return fig
+
