@@ -143,6 +143,7 @@ def join_states_tables(sites_df, census_df):
     joined_df = census_df.join(other=sites_state_vc_df, on='State Code', how='inner')
     joined_df['2010 persons per site'] = joined_df['ESTBASE2010_CIV'] / joined_df['Count']
     joined_df['2019 persons per site'] = joined_df['POPEST2019_CIV'] / joined_df['Count']
+    joined_df['Percent Change 2010-2019'] = 100 * (joined_df['POPEST2019_CIV'] - joined_df['ESTBASE2010_CIV']) / joined_df['ESTBASE2010_CIV']
     joined_df['Percent Change of 2010-2019 persons per site'] = 100 * (joined_df['2019 persons per site'] - joined_df['2010 persons per site'])/joined_df['2010 persons per site']
     linearRegressiontrain(joined_df)
     joined_df['Percent Change of 2010-2025 persons per site'] = 100 * (joined_df['Predicted Population 2025'] - joined_df['2010 persons per site'])/joined_df['2010 persons per site']
