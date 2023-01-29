@@ -67,3 +67,13 @@ def parse_sites(site_file, include_PR=True):
                          "FIPS County Code": fips, 
                          "State Code": states, 
                          "City": cities})
+
+def aggregate_by_state(sites_df):
+    sites_state_vc = sites_df['State Code'].value_counts()
+    sites_state_vc_df = pd.DataFrame({'State': sites_state_vc.index, 'Count':sites_state_vc})
+    return sites_state_vc_df
+
+def aggregate_by_county(sites_df):
+    sites_county_vc = sites_df['FIPS County Code'].value_counts()
+    sites_county_vc_df = pd.DataFrame({'County': sites_county_vc.index, 'Count':sites_county_vc})
+    return sites_county_vc_df
