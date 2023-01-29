@@ -9,7 +9,7 @@ import json
 def export_plotly_to_png(fig, filename):    # converting plotly graphs to png files
     pio.write_image(fig, filename, format='png')
 
-def create_county_map(dataframe, county_column, var_column, cmap='Viridis'):
+def create_county_map(dataframe, county_column, var_column, cmap='Viridis', filename='fig4.png'):
     counties = None
     with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
         counties = json.load(response)
@@ -24,10 +24,10 @@ def create_county_map(dataframe, county_column, var_column, cmap='Viridis'):
                           )
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    export_plotly_to_png(fig, "fig4.png")
+    export_plotly_to_png(fig, filename)
     return fig
 
-def create_state_map(dataframe, state_column, var_column, cmap='Viridis'):
+def create_state_map(dataframe, state_column, var_column, cmap='Viridis', filename='fig5.png'):
     counties = None
     with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
         counties = json.load(response)
@@ -41,11 +41,11 @@ def create_state_map(dataframe, state_column, var_column, cmap='Viridis'):
                           )
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    export_plotly_to_png(fig, "fig5.png")
+    export_plotly_to_png(fig, filename)
     return fig
 
 def census_2010_map():
-    fig = create_state_map(newdf, 'State', 'ESTBASE2010_CIV', cmap='Viridis')
-    export_plotly_to_png(fig, "fig6.png")
+    fig = create_state_map(dataframe, 'State', 'ESTBASE2010_CIV', cmap='Viridis', 'fig6.png')
+    export_plotly_to_png(fig, filename)
     return fig
     
