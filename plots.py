@@ -50,16 +50,16 @@ def census_2010_map(dataframe, state_column, var_column, cmap='Viridis', filenam
     return fig
  
 def pop_change_2010_2019(dataframe, state_column, var_column, cmap='Viridis', filename='fig7.png'):
-    fig = create_state_map(dataframe, 'State', 'Percent Change 2010-2019', cmap='Viridis', filename)
+    fig = create_state_map(dataframe, 'State', 'Percent Change 2010-2019', cmap='Viridis', filename=filename)
     export_plotly_to_png(fig, filename)
     return fig
 
-def 2019_pop_per_site((dataframe, state_column, var_column, cmap='Viridis', filename='fig8.png'):
-    fig = create_state_map(dataframe, 'State', '2019 persons per site', cmap='Viridis', filename)
+def plot_2019_pop_per_site(dataframe, state_column, var_column, cmap='Viridis', filename='fig8.png'):
+    fig = create_state_map(dataframe, 'State', '2019 persons per site', cmap='Viridis', filename=filename)
     export_plotly_to_png(fig, filename)
     return fig
                       
-def 2010_2019_per_site_change(dataframe, state_column, var_column, cmap='Viridis', filename='fig9.png'):
-    fig = create_state_map(dataframe, 'State', 'Percent Change of 2010-2019 persons per site', cmap='Viridis', filename)
+def plot_2010_2019_per_site_change(dataframe, state_column, var_column, cmap='Viridis', filename='fig9.png'):
+    fig = create_state_map(dataframe, 'State', 'Percent Change of 2010-2019 persons per site', cmap='Viridis', filename=filename)
     export_plotly_to_png(fig, filename)
     return fig
