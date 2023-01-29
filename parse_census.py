@@ -106,7 +106,7 @@ def load_census(directory):
     return grouped_census_df
 
 def time_series_by_state(joined_df, state):
-    time_df = pd.melt(joined_df[joined_df['State Code'] == state], value_vars=['ESTBASE2010_CIV', 'POPEST2012_CIV', 'POPEST2013_CIV', 'POPEST2014_CIV', 'POPEST2015_CIV', 'POPEST2016_CIV', 'POPEST2017_CIV', 'POPEST2018_CIV', 'POPEST2019_CIV'])
+    time_df = pd.melt(joined_df[joined_df['State Code'] == state], value_vars=['ESTBASE2010_CIV', 'POPEST2011_CIV', 'POPEST2012_CIV', 'POPEST2013_CIV', 'POPEST2014_CIV', 'POPEST2015_CIV', 'POPEST2016_CIV', 'POPEST2017_CIV', 'POPEST2018_CIV', 'POPEST2019_CIV'])
     time_df['year'] = time_df.index
     time_df['year'] = time_df['year'] + 2010
     time_df.drop(['variable'], axis=1, inplace=True)
