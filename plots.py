@@ -45,7 +45,7 @@ def create_state_map(dataframe, state_column, var_column, cmap='Viridis', filena
     return fig
 
 def census_2010_map(dataframe, state_column, var_column, cmap='Viridis', filename='fig6.png'):
-    fig = create_state_map(dataframe, 'State', 'ESTBASE2010_CIV', cmap='Viridis', filename='fig6.png')
+    fig = create_state_map(dataframe, 'State', 'ESTBASE2010_CIV', cmap='Viridis', filename)
     export_plotly_to_png(fig, filename)
     return fig
     
