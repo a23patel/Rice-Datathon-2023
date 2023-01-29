@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import addfips
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
 
 # Code taken from https://gist.github.com/JeffPaine/3083347
 states = [ 'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
@@ -102,6 +105,33 @@ def load_census(directory):
     grouped_census_df.drop(['State FIPS'], axis=1, inplace=True)
     return grouped_census_df
 
+def time_series_by_state(joined_df, state):
+    time_df = pd.melt(joined_df[joined_df['State Code'] == state], value_vars=['ESTBASE2010_CIV', 'POPEST2012_CIV', 'POPEST2013_CIV', 'POPEST2014_CIV', 'POPEST2015_CIV', 'POPEST2016_CIV', 'POPEST2017_CIV', 'POPEST2018_CIV', 'POPEST2019_CIV'])
+    time_df['year'] = time_df.index
+    time_df['year'] = time_df['year'] + 2010
+    time_df.drop(['variable'], axis=1, inplace=True)
+    return time_df
+
+def linearRegressiontrain(joined_df):
+    joined_df['Predicted Population 2025'] = 0
+    joined_df.reset_index(inplace = True)
+    for i, state in enumerate(joined_df['State']):
+        x = time_series_by_state(joined_df, state)['year'].to_numpy()
+        x = x.reshape(-1,1)
+        #print(x)
+        y = time_series_by_state(joined_df, state)['value'].to_numpy()
+        y = y.reshape(-1,1)
+        #print(y)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3)
+        lm = LinearRegression()
+        lm.fit(x_train, y_train)
+        arr = [2025]
+        year = np.array(arr).reshape(-1,1)
+        evals = lm.predict(x_test)
+        joined_df.at[i, 'Predicted Population 2025'] = lm.predict(year)[0]
+        print(f"R^2 score for {state}: ", r2_score(y_test, evals))
+        #print('R^2 Score: ', r2_score(y_test, evals))
+
 def join_states_tables(sites_df, census_df):
     """
     Create a joined table of sites aggregated by state, and census data aggregated by state
@@ -114,4 +144,6 @@ def join_states_tables(sites_df, census_df):
     joined_df['2010 persons per site'] = joined_df['ESTBASE2010_CIV'] / joined_df['Count']
     joined_df['2019 persons per site'] = joined_df['POPEST2019_CIV'] / joined_df['Count']
     joined_df['Percent Change of 2010-2019 persons per site'] = 100 * (joined_df['2019 persons per site'] - joined_df['2010 persons per site'])/joined_df['2010 persons per site']
+    linearRegressiontrain(joined_df)
+    joined_df['Percent Change of 2010-2025 persons per site'] = 100 * (joined_df['Predicted Population 2025'] - joined_df['2010 persons per site'])/joined_df['2010 persons per site']
     return joined_df
