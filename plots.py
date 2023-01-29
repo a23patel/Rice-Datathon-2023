@@ -42,3 +42,17 @@ def create_state_map(dataframe, state_column, var_column, cmap='Viridis'):
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     return fig
 
+def census_2010_pop(dataframe, state_column, var_column, cmap='Viridis'):
+    fig = px.choropleth(newdf, geojson = counties, 
+                           locations='state_column',
+                           locationmode="USA-states", color='var_column',
+                           color_continuous_scale=cmap,
+                           scope="usa",
+                           labels={'State Code':'States'}
+                          )
+
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.show()
+    export_plotly_to_png(fig, "fig6.png")
+    return fig
+    
